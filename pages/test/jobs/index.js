@@ -9,6 +9,23 @@ export default function Home({ data }) {
   const [selectedCompany, setSelectedCompany] = useState('All');
   const [distinctCompanies, setDistinctCompanies] = useState([]);
 
+  const [alphabeticalFilter, setAlphabeticalFilter] = useState(false);
+
+  // orders companies alphabetically
+  const handleFilterAlphabetically = (e) => {
+    //if unordered, or sorted descending, sort ascending
+    if (alphabeticalFilter === false || alphabeticalFilter === 'DESC') {
+      setAlphabeticalFilter('ASC');
+      filteredJobs.sort((a, b) => a.companyName.localeCompare(b.companyName));
+    }
+
+    //if sorted ascending, sort descending
+    if (alphabeticalFilter === 'ASC') {
+      setAlphabeticalFilter('DESC');
+      filteredJobs.sort((a, b) => b.companyName.localeCompare(a.companyName));
+    }
+  };
+
   //handler function called when user filters by company
   const handleFilterByCompanyName = (e) => {
     const { value } = e.target;
@@ -95,6 +112,23 @@ export default function Home({ data }) {
         </h1>
 
         <div className={styles['buttons-container']}>
+          <button
+            className={styles['filter-button']}
+            value='date'
+            onClick={handleFilterAlphabetically}
+          >
+            Order by company
+            {alphabeticalFilter && (
+              <img
+                src='/static/img/expand_more.svg'
+                className={[
+                  styles['sort-arrow'],
+                  alphabeticalFilter === 'DESC' ? styles['descending'] : '',
+                ].join(' ')}
+                alt='sort arrow'
+              />
+            )}
+          </button>
           <select
             className={styles['filter-button']}
             value={selectedCompany}
