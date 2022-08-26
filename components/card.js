@@ -27,7 +27,7 @@ export default function Card({
             <>
               <p className={styles.rating}>{rating.toFixed(1)}</p>
               <Image
-                src='/star_full.png'
+                src='/static/img/star_full.png'
                 width='12px'
                 height='12px'
                 className={styles['rating-logo']}
